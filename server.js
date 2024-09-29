@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 require("dotenv").config(); // .env dosyasından çevre değişkenlerini yüklemek için
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +18,7 @@ mongoose
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cors());
 
 // Ürün şeması
 const productSchema = new mongoose.Schema({
@@ -60,6 +62,17 @@ app.put("/products/:id", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+app.get("/products/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: "Ürün bulunamadı" });
+    res.json(product);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 
 // Ürün silme
 app.delete("/products/:id", async (req, res) => {
