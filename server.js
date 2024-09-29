@@ -18,9 +18,17 @@ mongoose
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors({
-  origin: 'http://localhost:3000', // 'https://abc-pms-f.vercel.app'
-}));
+  // CORS configuration
+  const corsOptions = {
+    origin: 'http://localhost:3000', // Allow only your frontend origin
+    optionsSuccessStatus: 200,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+  };
+
+  app.use(cors(corsOptions));
+
+  // Handle preflight requests
+  app.options('*', cors(corsOptions));
 
 // Ürün şeması
 const productSchema = new mongoose.Schema({
