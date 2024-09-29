@@ -18,7 +18,9 @@ mongoose
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000', // 'https://abc-pms-f.vercel.app'
+}));
 
 // Ürün şeması
 const productSchema = new mongoose.Schema({
