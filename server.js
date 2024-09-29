@@ -20,7 +20,7 @@ mongoose
 app.use(bodyParser.json());
   // CORS configuration
   const corsOptions = {
-    origin: ['https://abc-pms-f.vercel.app', 'http://localhost:3000'],
+    origin: '*',
     optionsSuccessStatus: 200,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
   };
